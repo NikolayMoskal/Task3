@@ -114,8 +114,15 @@ namespace Task3.Stations.Models
                     }
 
                     CallCompleted(this, new CallCompletedEventArgs(arg.PhoneNumber, ownEntry.LinkedNumber, ownEntry.TariffPlan));
-                    _subscribers.First(x => x.Port.PhoneNumber == ownEntry.LinkedNumber).Port.State = PortState.Connected;
+                    var result = _subscribers
+                        .FirstOrDefault(x => x.Port.PhoneNumber == ownEntry.LinkedNumber);
+                    if (result != null)
+                    {
+                        result.Port.State = PortState.Connected;
+                    }
+
                     ownEntry.Port.State = PortState.Connected;
+                    ownEntry.LinkedNumber = 0; // забываем и не храним номер предыдущего собеседника
                     break;
                 }
             }
