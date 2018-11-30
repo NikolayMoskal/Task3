@@ -25,7 +25,7 @@ namespace Task3.Billings
             Logger.Info($"The call is completed. Duration: {args.CallDuration}s.");
             
             var price = args.Plan.Calculate(args.CallDuration);
-            _entries.Add(new BillingSystemEntry(args.LinkedNumber, args.PhoneNumber, args.CallDuration, price));
+            _entries.Add(new BillingSystemEntry(args.SenderNumber, args.ReceiverNumber, args.CallDuration, price));
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Task3.Stations.Models
     {
         public PortState State { get; }
         public long PhoneNumber { get; }
-        
+        public bool IsPickedUpPhone { get; }
+
         public StateEventArgs(PortState state)
         {
             State = state;
@@ -16,6 +17,11 @@ namespace Task3.Stations.Models
         public StateEventArgs(PortState state, long phoneNumber) : this(state)
         {
             PhoneNumber = phoneNumber;
+        }
+
+        public StateEventArgs(PortState state, long phoneNumber, bool isPickedUpPhone) : this(state, phoneNumber)
+        {
+            IsPickedUpPhone = isPickedUpPhone;
         }
     }
 }

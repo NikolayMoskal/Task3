@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using Task3.Billings;
 using Task3.Stations.Models;
-using Task3.Users.Interfaces;
 
 namespace Task3.Users.Models
 {
     public class Subscriber
     {
-        private readonly List<ITerminal> _terminals;
+        private readonly List<Terminal> _terminals;
         public long PhoneNumber { get; private set; }
         public string Name { get; }
         
@@ -20,7 +19,7 @@ namespace Task3.Users.Models
             }
 
             Name = name;
-            _terminals = new List<ITerminal>(0);
+            _terminals = new List<Terminal>(0);
         }
 
         public void Subscribe(PhoneStation station, TariffPlan plan)
@@ -38,7 +37,7 @@ namespace Task3.Users.Models
             PhoneNumber = station.AddSubscriber(this, plan);
         }
 
-        public void AddTerminal(ITerminal terminal)
+        public void AddTerminal(Terminal terminal)
         {
             if (terminal == null)
             {
