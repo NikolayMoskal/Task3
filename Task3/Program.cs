@@ -28,14 +28,22 @@ namespace Task3
                 var terminal2 = new Terminal();
                 var port2 = station.SelectPort(subscriber2.PhoneNumber);
                 subscriber2.AddTerminal(terminal2);
+                
+                var subscriber3 = new Subscriber("PersonC");
+                subscriber3.Subscribe(station, new TariffPlan("SomeTariff"));
+                var terminal3 = new Terminal();
+                var port3 = station.SelectPort(subscriber3.PhoneNumber);
+                subscriber3.AddTerminal(terminal3);
 
                 terminal.ConnectToPort(port);
                 terminal2.ConnectToPort(port2);
+                terminal3.ConnectToPort(port3);
                 
-                terminal.Call(subscriber2.PhoneNumber);
-                terminal2.Call();
+                subscriber.PickUpPhone(terminal, subscriber2.PhoneNumber);
+                subscriber2.PickUpPhone(terminal2);
+                subscriber3.PickUpPhone(terminal3, subscriber2.PhoneNumber);
                 
-                terminal2.Complete();
+                subscriber2.HangUp();
             }
             catch (Exception e)
             {

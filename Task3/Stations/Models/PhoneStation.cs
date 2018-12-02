@@ -127,24 +127,25 @@ namespace Task3.Stations.Models
             }
             else
             {
-                Logger.Warn($"The line is busy. Try later.");
+                Logger.Warn("The line is busy. Try later.");
             }
         }
 
         private void ManageConnection(Port sender, Port receiver, bool isPickedUpPhone, bool isAnswered)
         {
-            if (!isPickedUpPhone) // если трубка не поднята или была опущена, то ищем и закрываем соединение
+            // если трубка не поднята или была опущена, то ищем и закрываем соединение
+            if (!isPickedUpPhone)
             {
                 RemoveConnection(sender, receiver);
                 RemoveConnection(receiver, sender);
                 return;
             }
-
-            if (sender.State == PortState.Call && !isAnswered) // попытка инициации нового соединения
+            // попытка инициации нового соединения, если мы звоним, а не отвечаем на звонок
+            if (sender.State == PortState.Call && !isAnswered)
             {
                 CreateConnection(sender, receiver);
             }
-            
+            // попытка достучаться на выключенный телефон
             if (receiver.State == PortState.Disconnected)
             {
                 Logger.Info($"The subscriber {receiver.PhoneNumber} is unreachable. Try it later.");
@@ -197,7 +198,6 @@ namespace Task3.Stations.Models
             public Port Port { get; }
             public Subscriber Subscriber { get; }
             public TariffPlan TariffPlan { get; }
-            public long LinkedNumber { get; set; }
 
             public Entry(Port port, Subscriber subscriber, TariffPlan tariffPlan)
             {
